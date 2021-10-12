@@ -75,6 +75,7 @@ export class AppService {
     const pdfParams = AppService.readPDFParams(params);
     const browser = await AppService.getBrowser();
     const page = await browser.newPage();
+    const delay = (ms:number) => new Promise(res => setTimeout(res, ms));
 
     await page.goto(url);
 
@@ -83,6 +84,8 @@ export class AppService {
     }, body);
 
     await page.goto(url, { waitUntil: waitUntil as PuppeteerLifeCycleEvent });
+
+    await delay(5000);
 
     await page.evaluateHandle('document.fonts.ready');
 
